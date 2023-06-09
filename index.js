@@ -26,6 +26,18 @@ async function wondeAPI(url) {
 
 // All these functions below are aimed at getting data from
 // various endpoints in the API
+async function getEmployees(school_id){
+
+    const url = `https://api.wonde.com/v1.0/schools/${school_id}/employees/`;
+    const data = await wondeAPI(url);  
+    return data;
+}
+
+async function getEmployee(school_id, employee_id){
+    const url = `https://api.wonde.com/v1.0/schools/${school_id}/employees/${employee_id}?employment_details`;
+    const data = await wondeAPI(url);
+    return data
+}
 
 async function getClasses(school_id, emp_id){
     const url = `https://api.wonde.com/v1.0/schools/${school_id}/employees/${emp_id}?include=classes,roles,classes.lessons`;
