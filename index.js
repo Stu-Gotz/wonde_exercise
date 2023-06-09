@@ -7,36 +7,57 @@ import token from './env.js';
 // and the user has been authenticated via a pre-existing login system.
 const authToken = token();
 
-// Function finds the base endpoints of the API
-async function wondeAPI(school_id, endpoint) {
-    const res = await fetch(`https://api.wonde.com/v1.0/schools/${school_id}/${endpoint}`,{
+// Function that calls the API. Takes a URL string that is created
+// by the function
+async function wondeAPI(url) {
+    const res = await fetch(url,{
     method: 'GET',
     headers: {
-        "Content-Type": "application/javascript",
+        "Content-Type": "application/json",
         Authorization: "Bearer: " + authToken
         }
     });
 
     const data = await res.json();
-    return data.data
+    return data
+}
+// emp id 199135293/
+// class name 10A/Ar1
+
+// All these functions below are aimed at getting data from
+// various endpoints in the API
+
+async function getClasses(school_id, emp_id){
+    const url = `https://api.wonde.com/v1.0/schools/${school_id}/employees/${emp_id}?include=classes,roles,classes.lessons`;
+    const data = await wondeAPI(url);
+    return data;
 }
 
-async function getClasses(school_id){
-    const res = await fetch(`https://api.wonde.com/v1.0/schools/${school_id}/employees/A199135293/?employment_details`,{
-        method: 'GET',
-        headers: {
-            "Content-Type": "application/javascript",
-            Authorization: "Bearer: " + authToken
-        }
-    });
-    const data = await res.json();    
-    return data.data
+async function getStudents(school_id, class_id){
+    const url = `https://api.wonde.com/v1.0/schools/${school_id}/classes/${class_id}?include=students`;
+    const data = await wondeAPI(url);
+    console.log(data)
+    return data;
 }
+
 const school_id = "A1930499544";
-const teachers = await wondeAPI(school_id, "employees")
-const classes = await wondeAPI(school_id, "classes")
-console.log(teachers)
-console.log(classes.students)
+const employees = await getEmployees(school_id);
+// const classes = await getClasses(school_id);
+// console.log(classes)
+console.log(employees)
+// const subj_id = classes[0].subject
 
-console.log(await getClasses(school_id))
+for(var i=0; i < employees.data.length; i++){
+    const cls = await getClasses(school_id, employees.data[i]["id"]);
+    if(cls.data.classes.data.length > 1){
+        await getStudents(school_id, cls.data.classes.data[0].id)
+    }
+}
+// const lesson = await getLessons(school_id);
+// const subject = await getSubject(school_id, subj_id);
+// console.log(lesson)
+// console.log(subject)
 
+// const students = await getStudents(school_id);
+// console.log(students)
+// console.log(await getLesson(school_id))
