@@ -10,7 +10,6 @@ defineProps(['students', 'class_name'])
     <li v-for="student in students">
       {{ student.forename }} {{ student.surname }}
     </li>
-    <!-- <li>Hello</li> -->
   </ul>
 </template>
 
