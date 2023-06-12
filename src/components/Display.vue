@@ -3,13 +3,15 @@ import Students from './Students.vue'
 import { ref } from 'vue'
 import { useStore } from '../stores/store.js'
 
+//Import the store to access store variables and functions
 const store = useStore();
-console.log(store.employeeData.value)
 
+//to pass the class name for the students view
 let cls_name = ref("");
 
 const employee_id = "A500460806";
 
+// sets class name to pass as a prop
 function setClassName(class_name) {
   cls_name.value = class_name;
 }

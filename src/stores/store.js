@@ -14,11 +14,8 @@ const authToken = token();
 // in a real world, they would probably be set and passed via login or some
 // other lookup function
 const school_id = "A1930499544";
-let url = `https://api.wonde.com/v1.0/schools/${school_id}`
+const url = `https://api.wonde.com/v1.0/schools/${school_id}`
 
-function resetUrl(){
-    url = `https://api.wonde.com/v1.0/schools/${school_id}`
-}
 export const useStore = defineStore('exerciseStore', {
     // in a better world, these would probably be separated into different stores. 
     // in the case of how I constructed this though, I think this makes more
@@ -42,18 +39,17 @@ export const useStore = defineStore('exerciseStore', {
         //query the API to return a single employee, which then we can get the classes from using the 
         //include=classes parameter
         async getEmployee(employee_id){
-            url += `/employees/${employee_id}?include=classes,classes.subject,classes.lessons,roles`;
-            const result = await this.wondeAPI(url);
+            const employeeUrl = url +  `/employees/${employee_id}?include=classes,classes.subject,classes.lessons,roles`;
+            const result = await this.wondeAPI(employeeUrl);
             this.employeeData = result
-            resetUrl()
+
             return this.employeeData.data
         },        
         // This was to get the subject name for the class, but none of the ones for this 
         // have any class names so its moot
         async getSubject(subject_id){
-          url += `/subjects/${subject_id}`;
+          const subjectUrl = url +  `/subjects/${subject_id}`;
           const data = await this.wondeAPI(url);
-          resetUrl()
           return await data.data.name != null ? data.data.name : ""
         },
         // return the classes from the employee data
@@ -62,10 +58,9 @@ export const useStore = defineStore('exerciseStore', {
             return this.classData
         },        
         async getStudents(class_id){
-            url += `/classes/${class_id}?include=students`;
-            const result = await this.wondeAPI(url)
+            const studentsUrl = url + `/classes/${class_id}?include=students`;
+            const result = await this.wondeAPI(studentsUrl)
             this.studentsData = result.data.students.data;
-            resetUrl()
             return this.studentsData;
         }
     }
