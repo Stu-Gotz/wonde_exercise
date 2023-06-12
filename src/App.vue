@@ -20,12 +20,17 @@ header {
   margin: 0 auto 2rem;
 }
 
+/* .container {
+  display: flex;
+  flex-direction: column;
+} */
 @media (min-width: 1024px) {
-  header {
+  /* .header {
     display: flex;
     place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+    flex: 1;
+    width: 100%;;
+  } */
 
   .logo {
     margin: 0 2rem 0 0;
@@ -43,4 +48,5 @@ ul > * {
   margin: 0;
   padding: 0;
 }
+
 </style>

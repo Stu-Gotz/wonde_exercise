@@ -4,7 +4,9 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-
+  display: flex;
+  justify-content: center;
+  align-items: top;
   font-weight: normal;
 }
 
@@ -20,7 +22,7 @@ a {
   }
 }
 
-@media (min-width: 1024px) {
+/* @media (min-width: 1024px) {
   body {
     display: flex;
     place-items: center;
@@ -29,6 +31,7 @@ a {
   #app {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: minxmax(50px, auto), 1fr;
     padding: 0 2rem;
   }
-}
+} */

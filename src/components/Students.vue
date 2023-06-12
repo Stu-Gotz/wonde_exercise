@@ -16,6 +16,10 @@ defineProps(['students', 'class_name'])
 <style scoped>
 
 li {
-  color: #FFD646
+  color: #FFD646;
+}
+ul {
+  border: 2px solid #3E5CFF;
+  padding: 5px;
 }
 </style>
